@@ -19,7 +19,9 @@ export default function Home() {
         <h2 className="text-5xl">NEXT AUTH</h2>
       </div>
       <div className="flex gap-5">
-        <button className="btn">Login</button>
+        <Link href={"/login"} className="btn">
+          Login
+        </Link>
         <Link href={"/register"} className="btn">
           Register
         </Link>
