@@ -1,70 +1,60 @@
 "use client";
-
+import { loginUser } from "@/action/server/auth";
 import Link from "next/link";
 
 const LoginForm = () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    console.log(email, password);
+
+    const result = await loginUser({
+      email,
+      password,
+      redirect: false,
+    });
+    console.log(result);
+
+    if (result) {
+      alert("login done");
+    } else {
+      alert("something is wrong");
+    }
+  };
+
   return (
-    <div>
-      <div className="min-h-screen flex items-center justify-center  px-4">
-        <div className="w-full max-w-md  rounded-2xl shadow-lg p-8">
-          <h1 className="text-2xl font-bold text-center mb-6">
-            Login to Your Account
-          </h1>
+    <div className="min-h-screen flex items-center justify-center bg-base-200">
+      <div className="card w-full max-w-sm shadow-xl bg-base-100">
+        <div className="card-body">
+          <h2 className="text-2xl font-bold text-center">Login</h2>
 
-          <form className="space-y-4">
-            {/* Email */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Email
-              </label>
-              <input
-                type="email"
-                placeholder="you@example.com"
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
+          <form onSubmit={handleSubmit} className="space-y-3">
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              className="input input-bordered w-full"
+              required
+            />
 
-            {/* Password */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Password
-              </label>
-              <input
-                type="password"
-                placeholder="••••••••"
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              className="input input-bordered w-full"
+              required
+            />
 
-            {/* Remember + Forgot */}
-            <div className="flex items-center justify-between text-sm">
-              <label className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                />
-                Remember me
-              </label>
-              <span className="text-blue-600 hover:underline cursor-pointer">
-                Forgot password?
-              </span>
-            </div>
-
-            {/* Button */}
-            <button
-              type="submit"
-              className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
-            >
+            <button type="submit" className="btn btn-primary w-full">
               Login
             </button>
           </form>
 
-          <p className="text-sm text-center text-gray-600 mt-4">
+          <p className="text-center text-sm mt-4">
             Don’t have an account?{" "}
-            <Link
-              href={"/register"}
-              className="text-blue-600 hover:underline cursor-pointer"
-            >
+            <Link href={`/register`} className="link link-primary">
               Register
             </Link>
           </p>
@@ -73,5 +63,4 @@ const LoginForm = () => {
     </div>
   );
 };
-
 export default LoginForm;
