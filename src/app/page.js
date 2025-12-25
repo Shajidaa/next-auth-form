@@ -2,7 +2,7 @@ import { RiNextjsLine } from "react-icons/ri";
 import { FaReact } from "react-icons/fa";
 import { IoShieldCheckmarkSharp } from "react-icons/io5";
 import { SiMongodb } from "react-icons/si";
-import Link from "next/link";
+
 export default function Home() {
   return (
     <div className="min-h-screen relative flex flex-col justify-center items-center gap-5 ">
@@ -17,14 +17,6 @@ export default function Home() {
       </div>
       <div className="relative">
         <h2 className="text-5xl">NEXT AUTH</h2>
-      </div>
-      <div className="flex gap-5">
-        <Link href={"/login"} className="btn">
-          Login
-        </Link>
-        <Link href={"/register"} className="btn">
-          Register
-        </Link>
       </div>
     </div>
   );

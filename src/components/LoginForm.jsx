@@ -1,8 +1,13 @@
 "use client";
-import { loginUser } from "@/action/server/auth";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import SocialButton from "./SocialButton";
 
 const LoginForm = () => {
+  const router = useRouter();
+  const params = useSearchParams();
+  // const callback = params.get("callbackUrl");
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -10,20 +15,22 @@ const LoginForm = () => {
     const password = form.password.value;
     console.log(email, password);
 
-    const result = await loginUser({
+    const result = await signIn("credentials", {
       email,
       password,
       redirect: false,
+      // callbackUrl: params.get("callbackUrl" || "/"),
     });
-    console.log(result);
+    console.log("sdfkdf", result);
 
-    if (result) {
-      alert("login done");
+    if (result?.error) {
+      alert("Login failed: " + result.error);
     } else {
-      alert("something is wrong");
+      alert("Login successful!");
+
+      // router.push("/");
     }
   };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-base-200">
       <div className="card w-full max-w-sm shadow-xl bg-base-100">
@@ -58,6 +65,7 @@ const LoginForm = () => {
               Register
             </Link>
           </p>
+          <SocialButton></SocialButton>
         </div>
       </div>
     </div>

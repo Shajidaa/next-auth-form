@@ -34,20 +34,23 @@ export const postUser = async (payload) => {
     insertedId: result.insertedId?.toString(),
   };
 };
+
 export const loginUser = async (payload) => {
+  console.log("login user -----", payload);
   const { email, password } = payload;
-  if (!email || !password) {
-    return null;
-  }
+  if (!email || !password) return null;
+
   const user = await connect(collections.USERS).findOne({ email });
-  if (!user) {
-    return null;
-  }
-  const isMatched = await bcrypt.compare(password, user?.password);
+  if (!user) return null;
+
+  const isMatched = await bcrypt.compare(password, user.password);
+
   if (isMatched) {
     return {
-      ...user,
-      insertedId: user.insertedId?.toString(),
+      id: user._id.toString(),
+      name: user.name,
+      email: user.email,
+      role: user.role,
     };
   }
   return null;

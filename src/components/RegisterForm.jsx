@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { postUser } from "../action/server/auth";
+import { signIn } from "next-auth/react";
 const RegisterForm = () => {
   const router = useRouter();
   const handleSubmit = async (e) => {
@@ -22,6 +23,12 @@ const RegisterForm = () => {
     const result = await postUser(formData);
     if (result.acknowledged) {
       alert("successfully register done");
+      // return router.push("/login");
+      const result = await signIn("credentials", {
+        email: formData.email,
+        password: formData.password,
+        //  callbackUrl
+      });
       return router.push("/login");
     } else {
       return alert("something is wrong");
